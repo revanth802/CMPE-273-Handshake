@@ -15,30 +15,46 @@ class cdashboard extends Component
     super(props);
     //maintain the state required for this component
     this.state = {
-        result : ""
+        result : "",
+        msg: []
     }
+this.enablefields = this.enablefields.bind(this);
   
 }
+
 
   componentWillMount()
   {
 
   }
-    componentDidMount()
-    {
-   
-    }
+  componentDidMount(){
+    axios.get('http://localhost:3001/displayjobdetails')
+            .then((response) => {
+                console.log("This is getting printed", response.data);
+                const data = response.data["results"];
+                console.log("data from console", data);
+            //update the state with the response data
+            this.setState({
+                msg : data,
+                rendermsg : ""
 
-    job = () =>
-    {
-      console.log('clicked');
-       return <p> hello rev</p>;
-     
-    }
+            });
+            console.log('message from didmount: ', this.state.msg)
+        });
+}
+
+enablefields=(props) =>
+{
+  props.disabled=false;
+}
 
     render()
     {
-        return (
+     function editjobs()
+     {
+  this.state.rendermsg = <div>Hello REvz</div>
+     }
+    /*    return (
           <>
           <Card className="text-center" bg="primary">
   <Card.Header>WELCOME TO DASHBOARD</Card.Header>
@@ -106,8 +122,61 @@ class cdashboard extends Component
         <div hidden="false">{this.job()}</div>
         </>      
 
-          );
+          ); */
+
+
+
+    function Welcome(props) {
+        return <h1>Hello, {props.name}</h1>;
+      }     
+  
+
+      const element = <Welcome name="Sara" />;
+    let details = this.state.msg.map(job => {
+      return(
+      
+      
+         
+        <table align="center">
+          <tbody>
+           
+            <tr><input type="text" placeholder={job.jobtitle} name="jobtitle" onChange = {this.jobtitlehandler} /></tr>
+            <tr><input type="text" placeholder={job.posting} name="jobposting" onChange = {this.jobpostinghandler} disabled={this.state.disablefields}/></tr>
+            <tr><input type="text" placeholder={job.applicationdeadline} name="applicationdeadline" onChange = {this.applicationdeadlinehandler} disabled={this.state.disablefields}/></tr>
+            <tr><input type="text" placeholder={job.location} name="applicationdeadline" onChange = {this.locationhandler} disabled={this.state.disablefields}/></tr>
+            <tr><input type="text" placeholder={job.salary} name="applicationdeadline" onChange = {this.salaryhandler} disabled={this.state.disablefields}/></tr>
+            <tr><input type="text" placeholder={job.description} name="applicationdeadline" onChange = {this.description} disabled={this.state.disablefields}/></tr>
+
+            <tr><input type="text" placeholder={job.jobcategory} name="applicationdeadline" onChange = {this.jobcategory} disabled={this.state.disablefields}/></tr>
+            <button onClick={this.enablefields} class="btn btn-primary">Edit</button>               
+         
+         <button onClick={this.editjobs} class="btn btn-primary"> Add a new Job </button> 
+           
+          </tbody>
+          </table>
+      )
+  });
+
+
+        return(
+        
+        <div align="center" className="card">
+     {this.state.rendermsg}
+        <div className="row-fluid">
+          <div className="span2">
+          {details}
+         </div>
+          <div className="span10">
+          </div>
+        {element}
+        </div>
+      </div>  
+
+        )
     }
-}
+
+
+    }
+
 
 export default cdashboard;

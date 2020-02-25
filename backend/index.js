@@ -164,12 +164,25 @@ app.post('/creg', function (req, res) {
       }
       else{
        console.log(data);
+       res.json(results);
       }
       });
 
     });
 
 
+    
+
+    app.get('/displayjobdetails', async (req, res) => {
+ 
+      console.log('in backend');
+      con.query( 'SELECT * FROM jobopenings', function(error,results)
+      {
+          console.log(results);
+          res.json({ results });
+          
+      });
+    });
 
 //start your server on port 3001
 app.listen(3001);

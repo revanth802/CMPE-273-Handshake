@@ -13,7 +13,7 @@ class creg extends Component
             email: "",
             password : "",
             location:"",
-
+            
 
             authFlag : false
         }
@@ -25,6 +25,7 @@ class creg extends Component
         this.submitcreg= this.submitcreg.bind(this);
     }
 
+    
     //Call the Will Mount to set the auth Flag to false
     componentWillMount(){
         this.setState({
@@ -75,14 +76,10 @@ class creg extends Component
                 console.log("Status Code : ",response.status);
                 if(response.data === "success"){
                     this.setState({
-                        authFlag : true
-                    })
-                }
-                if(response.data === "fail1"){
-                    this.setState({
                         authFlag : 1
                     })
                 }
+                
                 if(response.data==="fail2")
                 {
                     this.setState({authFlag : 2})
@@ -93,7 +90,10 @@ class creg extends Component
     }
     
     render()
-    {
+    { 
+        var red=null;
+        if(this.state.authFlag==1)
+       { red= <h1>Registration successfully</h1>; }
 
         return(
             <div style={{backgroundColor:"black"}}>
@@ -124,8 +124,10 @@ class creg extends Component
                     </div>
                     <button onClick={this.submitcreg} type="button" class="btnSubmit" >Signup</button>
                 </div>
+            
             </div>
         </div>
+        {red}
         </div>
         )
     }
