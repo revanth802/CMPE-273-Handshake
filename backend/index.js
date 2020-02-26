@@ -170,9 +170,6 @@ app.post('/creg', function (req, res) {
 
     });
 
-
-    
-
     app.get('/displayjobdetails', async (req, res) => {
  
       console.log('in backend');
@@ -183,6 +180,20 @@ app.post('/creg', function (req, res) {
           
       });
     });
+
+    app.post('/cjob', function(req,res){
+      console.log("Inside Company job insertion");    
+      con.query( 'INSERT into jobopenings (company_id,jobtitle,posting,applicationdeadline,location,salary,jobdescription,jobcategory) VALUES(?,?,?,?,?,?,?,?)', 
+      [2,req.body.jobtitle,new Date(req.body.posting),new Date(req.body.applicationdeadline),req.body.location,req.body.salary,req.body.jobdescription,req.body.jobcategory],
+      function(error,results)
+      {
+          console.log(req.body);
+          console.log(error);
+          console.log(results);
+      });
+      
+  })
+  
 
 //start your server on port 3001
 app.listen(3001);
