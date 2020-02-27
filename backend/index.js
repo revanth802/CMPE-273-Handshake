@@ -187,8 +187,8 @@ app.post('/creg', function (req, res) {
       [2,req.body.jobtitle,new Date(req.body.posting),new Date(req.body.applicationdeadline),req.body.location,req.body.salary,req.body.jobdescription,req.body.jobcategory],
       function(error,results)
       {
+          res.send('success')
           console.log(req.body);
-          console.log(error);
           console.log(results);
       });
       

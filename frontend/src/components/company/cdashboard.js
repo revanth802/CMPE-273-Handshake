@@ -6,7 +6,7 @@ import cookie from 'react-cookies';
 import {Redirect} from 'react-router';
 import Button from 'react-bootstrap/Button';
 import dateFormat from 'dateformat';
-import {Card,CardDeck} from "react-bootstrap";
+import {Card,CardGroup} from "react-bootstrap";
 
 
 
@@ -19,7 +19,8 @@ class cdashboard extends Component
     this.state = {
         result : "",
         msg: [],
-        isloggedin: false
+        isloggedin: false,
+        authFlag:false
     }  
 
     this.loginhandler = this.loginhandler.bind(this);
@@ -143,6 +144,7 @@ submitLogin = (e) => {
 
     render()
     {
+      
       var addnewjob;
       var dashboard;
       var button,dis;
@@ -181,7 +183,7 @@ submitLogin = (e) => {
         <div align="center">
         
         <Card align="center" className="text-center" bg="info" text="white"   style={{ width: '30rem' }}>
-        <table >
+        <table align="center">
           <tbody>
            <br></br>
             <tr><td>Title : {job.jobtitle}  </td></tr>
@@ -219,10 +221,10 @@ else
                       <input onChange = {this.jobtitleChangeHandler} type="text" class="form-control" name="jobtitle" placeholder="Job title"/>
                   </div>
                   <div class="form-group">
-                      <input onChange = {this.postingChangeHandler} type="text" class="form-control" name="posting" placeholder="Posting"/>
+                      <input onChange = {this.postingChangeHandler} type="date" class="form-control" name="posting" placeholder="Posting"/>
                   </div>
                   <div class="form-group">
-                      <input onChange = {this.applicationdeadlineChangeHandler} type="text" class="form-control" name="applicationdeadline" placeholder="Application deadline"/>
+                      <input onChange = {this.applicationdeadlineChangeHandler} type="date" class="form-control" name="applicationdeadline" placeholder="Application deadline"/>
                   </div>
                   <div class="form-group">
                       <input onChange = {this.locationChangeHandler} type="text" class="form-control" name="location" placeholder="location"/>
@@ -237,7 +239,7 @@ else
                       <input onChange = {this.jobcategoryChangeHandler} type="text" class="form-control" name="jobcategory" placeholder="Job category"/>
                   </div>
 
-                  <button onClick = {this.submitLogin} class="btn btn-primary">Post Job!</button>      
+                  <button onClick = {this.submitLogin} class="btn btn-primary">Post Job!</button>
                   <br/>
                   <br/>            
           </div>
@@ -251,10 +253,13 @@ else
         <div className="row-fluid">
        {dis}
        <br></br>
+       {button}
+       <br></br>
+       <br></br>
           <div className="span2">
-            <CardDeck>
+            <CardGroup>
           {dashboard}
-          </CardDeck>
+          </CardGroup>
          </div>
           <div className="span10">
           </div>
