@@ -385,7 +385,7 @@ class dashboard extends Component {
     console.log('User Details',this.state.userDetails);
     console.log('User Details',this.state);
 
-    this.props.updateAction(this.state);
+  //  this.props.updateAction(this.state);
 
     /*axios.post('http://localhost:3001/updateUser', this.state)
       .then(response => {

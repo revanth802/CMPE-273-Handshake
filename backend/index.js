@@ -220,17 +220,6 @@ app.post('/creg', function (req, res) {
       });
     });
 
-    app.get('/displayprofile', async (req, res) => {
- 
-      console.log('in student profile');
-      con.query( 'SELECT * FROM student_basicdetails where student_id= ? ',[sessvar.student_id], function(error,results)
-      {
-          console.log(results);
-          res.json({ results });
-          
-      });
-    });
-
     app.post('/cjob', function(req,res){
       console.log("Inside Company job insertion");    
       con.query( 'INSERT into jobopenings (company_id,jobtitle,posting,applicationdeadline,location,salary,jobdescription,jobcategory) VALUES(?,?,?,?,?,?,?,?)', 
@@ -244,7 +233,7 @@ app.post('/creg', function (req, res) {
       
   })
   
-    app.post('/getUserDetails', function(req,res){
+    app.post('/userDetails', function(req,res){
     var emailId = "'"+req.body.emailId+"'";
     //if(emailId){
         //var emailId = "'"+req.params.emailId+"'";
