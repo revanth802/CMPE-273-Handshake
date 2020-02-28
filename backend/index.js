@@ -39,6 +39,7 @@ app.use(session({
     activeDuration      :  5 * 60 * 1000
 }));
 
+var sessvar;
 // app.use(bodyParser.urlencoded({
 //     extended: true
 //   }));
@@ -62,7 +63,7 @@ app.use(function(req, res, next) {
   
 //Route to handle Post Request Call
 app.post('/login',function(req,res){
-  
+  sessvar=req.session;
     console.log("Inside Login Post Request");
     //console.log("Req Body : ", username + "password : ",password);
     console.log("Req Body : ",req.body);
@@ -70,7 +71,7 @@ app.post('/login',function(req,res){
 
         let email= req.body.username;
         let password1 = req.body.password;
-        con.query('SELECT * FROM student WHERE emailId = ?',[email], function (error, results, fields) {
+        con.query('SELECT * FROM student_basicdetails WHERE emailId = ?',[email], function (error, results, fields) {
         if (error) {
           console.log("error ocurred",error);
           res.send("err");
@@ -78,8 +79,12 @@ app.post('/login',function(req,res){
           // console.log('The solution is: ', results);
           if(results.length >0){
             if(results[0].password == password1){
-              res.send("success");
+              sessvar.student_id = results[0].student_id;
+              console.log(sessvar.student_id);
+              res.send(email);
               console.log('success');
+
+              
             }
             else{
               res.send("fail2");
@@ -170,10 +175,51 @@ app.post('/creg', function (req, res) {
 
     });
 
+    app.post('/reg', function (req, res) {
+    
+      console.log('reg');
+      console.log("Req Body : ",req.body);
+        var flag2=0;
+    
+        if(!req.session.user)
+        {
+            res.cookie(null);
+        }
+        else{
+            res.cookie('cookie',"admin",{maxAge: 900000, httpOnly: false, path : '/'});
+        }
+    
+        let data=[req.body.name,req.body.email,req.body.password,req.body.collegename] 
+    
+        con.query('INSERT into student_basicdetails(name,emailid,password,collegename) VALUES(?,?,?,?)',[req.body.name,req.body.email,req.body.password,req.body.collegename], 
+        function (error, results, fields) {
+          if (error) {
+            console.log("error ocurred",error);
+            res.send("err");
+          }
+          else{
+           console.log(data);
+           res.send("success");
+          }
+          });
+    
+        });
+    
     app.get('/displayjobdetails', async (req, res) => {
  
       console.log('in backend');
       con.query( 'SELECT * FROM jobopenings', function(error,results)
+      {
+          console.log(results);
+          res.json({ results });
+          
+      });
+    });
+
+    app.get('/displayprofile', async (req, res) => {
+ 
+      console.log('in student profile');
+      con.query( 'SELECT * FROM student_basicdetails where student_id= ? ',[sessvar.student_id], function(error,results)
       {
           console.log(results);
           res.json({ results });

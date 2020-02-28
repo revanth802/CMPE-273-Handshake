@@ -24,6 +24,7 @@ class Main extends Component {
                 <Route path="/dashboard" component={dashboard} />
                 <Route path="/cdashboard" component={cdashboard} />
                 <Route path="/creg" component={creg} />
+           
                
             </div>
         )

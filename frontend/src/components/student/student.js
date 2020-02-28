@@ -4,9 +4,11 @@ import axios from 'axios';
 import cookie from 'react-cookies';
 import {Redirect} from 'react-router';
 import { Link } from 'react-router-dom';
+import login from '../../js/actions/loginaction';
+import { connect } from 'react-redux';
 
 //Define a Login Component
-class Student extends Component{
+class student extends Component{
     //call the constructor method
     constructor(props){
         //Call the constrictor of Super class i.e The Component
@@ -50,45 +52,53 @@ class Student extends Component{
             username : this.state.username,
             password : this.state.password
         }
+        this.props.login(data);
         //set the with credentials to true
-        axios.defaults.withCredentials = true;
+     /*   axios.defaults.withCredentials = true;
         //make a post request with the user data
-        axios.post('http://localhost:3001/clogin',data)
+        axios.post('http://localhost:3001/login',data)
             .then(response => {
                 console.log("Status Code : ",response.status);
-                if(response.data === "success"){
-                    this.setState({
-                        authFlag : true
-                    })
-                }
-                if(response.data === "fail1"){
+                
+                if(response.data == "fail1"){
                     this.setState({
                         authFlag : 1
                     })
                 }
-                if(response.data==="fail2")
+               else if(response.data=="fail2")
                 {
                     this.setState({authFlag : 2})
                 }
+                else
+            {
+                console.log(response.data);
+                    sessionStorage.setItem("name",response.data);
+                    this.setState({
+                        authFlag : 0
+                    })
+                }
                 
 
-            });
+            }); */
     }
 
     render(){
+        console.log(this.state.authFlag);
         //redirect based on successful login
-        let redirectVar = null;
-        if(cookie.load('cookie')){
+        var redirectVar = null;
+  /*      if(cookie.load('cookie')){
             redirectVar = <Redirect to= "/home"/>
-        }
+        } */
         if(this.state.authFlag===1)
         redirectVar=<p style={{color:"red",textAlign:"center"}}> USERNAME DOESNT EXIST </p>;
 
         else if(this.state.authFlag===2)
         redirectVar=<p style={{color:"red",textAlign:"center"}} > INVALID CREDENTIALS</p>
         
-        else if(this.state.authFlag===true)
-        redirectVar=<Redirect to='/dashboard'/>
+        else if(this.state.authFlag===0)
+       { redirectVar=<Redirect to='/dashboard'/>
+    //    sessionStorage.setItem("name","revanth");
+ }
       
         return(
             <div>
@@ -125,5 +135,21 @@ class Student extends Component{
     }
 }
 
+function mapStateToProps(state) {
+    console.log(state)
+    return {
+      status: state.loginReducer.status
+    };
+  }
+  
+  const mapDispatchToProps = dispatch => {
+    return {
+      login: (values) => dispatch(login(values))
+    }
+  }
+  
+export default connect(mapStateToProps, mapDispatchToProps)(student);
 //export Login Component
-export default Student;
+//export default Login;
+//export Login Component
+

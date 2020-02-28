@@ -46,28 +46,16 @@ class Navbar extends Component {
             <div >
                 {redirectVar}
     
-            <nav class="navbar navbar-inverse" style={{backgroundcolor: "blue"}} >
+                <nav class="navbar" style={{background: "#4034eb"}} >
                 <div class="container-fluid">
                     
                     </div>
                     <ul class="nav navbar-nav">
                         <li class="nav-item"><img src={log1} alt="handshake" height="50" width="50"/></li>
-                        <li class="active"> <Link to='/student' >Student</Link></li>
-                        <li class="nav-item"><Link to='/company'>Company</Link></li>
-                        <li class="nav-item"><Link to='/company'>Events</Link></li>
-                        <ReactSearchBox
-          placeholder="Search for Jobs,Companies"
-
-          onFocus={() => {
-            console.log('This function is called when is focussed')
-          }}
-          onChange={value => console.log(value)}
-          fuseConfigs={{
-            threshold: 0.05,
-          }}
-          
-   
-        />
+                        <li class="active"> <Link to='/student'  style={{color:"#fff",fontWeight:"bold"}}>Student</Link></li>
+                        <li class="nav-link"><Link to='/company' style={{color:"#fff",fontWeight:"bold"}}>Company</Link></li>
+                        <li class="nav-item"><Link to='/events' style={{color:"#fff",fontWeight:"bold"}}>Events</Link></li>
+                        <li> <ReactSearchBox></ReactSearchBox></li>
                     </ul>
                     {navLogin}
               
