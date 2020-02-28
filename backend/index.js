@@ -81,10 +81,14 @@ app.post('/login',function(req,res){
             if(results[0].password == password1){
               sessvar.student_id = results[0].student_id;
               console.log(sessvar.student_id);
-              res.send(email);
+           
               console.log('success');
-
-              
+             res.cookie("userName", email, {
+                maxAge: 900000,
+                httpOnly: false,
+                path: "/"
+            }); 
+            res.send('Successful login');
             }
             else{
               res.send("fail2");
@@ -240,6 +244,25 @@ app.post('/creg', function (req, res) {
       
   })
   
+    app.post('/getUserDetails', function(req,res){
+    var emailId = "'"+req.body.emailId+"'";
+    //if(emailId){
+        //var emailId = "'"+req.params.emailId+"'";
+   // }
+    var dbQuery = "Select * from student_basicdetails Where emailID = " + emailId;
+   
+    con.query(
+        dbQuery,
+        (err, rows) => {
+        if (err) throw err;   
+        console.log('Data received from Db:\n');
+        console.log(rows);
+        res.body = rows;
+        return res.send(rows[0]);
+        }
+    );
+      })
+
 
 //start your server on port 3001
 app.listen(3001);

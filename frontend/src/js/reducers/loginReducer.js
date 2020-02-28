@@ -8,17 +8,19 @@ const loginReducer = (state = {}, action) => {
             console.log("-----123----");
             let temp = JSON.stringify(action);
             temp = JSON.parse(temp);
-            newState.status = temp.payload.status;
+            newState.status = temp.payload.data;
+            console.log(temp.payload.response);
            
     
         } else if (action.type === "login_error") {
             let temp = JSON.stringify(action);
             temp = JSON.parse(temp);
             console.log("temp error", temp);
-            newState.status = temp.payload.response.status;
+            newState.status= temp.payload.data;
+            console.log(temp.payload.response);
     
         }
-    
+    console.log(newState)
     return newState;
 };
 

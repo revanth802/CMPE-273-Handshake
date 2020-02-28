@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import login from '../../js/actions/loginaction';
 import { connect } from 'react-redux';
 
+
 //Define a Login Component
 class student extends Component{
     //call the constructor method
@@ -53,6 +54,10 @@ class student extends Component{
             password : this.state.password
         }
         this.props.login(data);
+
+        this.setState({
+            username:this.state.username
+        })
         //set the with credentials to true
      /*   axios.defaults.withCredentials = true;
         //make a post request with the user data
@@ -89,7 +94,7 @@ class student extends Component{
   /*      if(cookie.load('cookie')){
             redirectVar = <Redirect to= "/home"/>
         } */
-        if(this.state.authFlag===1)
+   /*     if(this.state.authFlag===1)
         redirectVar=<p style={{color:"red",textAlign:"center"}}> USERNAME DOESNT EXIST </p>;
 
         else if(this.state.authFlag===2)
@@ -98,11 +103,39 @@ class student extends Component{
         else if(this.state.authFlag===0)
        { redirectVar=<Redirect to='/dashboard'/>
     //    sessionStorage.setItem("name","revanth");
- }
-      
+    */
+
+        var message=null;
+        console.log('testLoad');
+        
+        let move = null;
+
+        console.log(this.props) ;
+        if(this.props.status){
+        if(this.props.status == "fail1" )
+            message= <p style={{atextAlign:"center",color:"red"}}>Incorrect credentials</p>;
+
+        else if(this.props.status== 'fail2')
+            message= <p style={{textAlign:"center", color:"red"}}>Incorrect password</p>;
+
+        else if(this.props.status === "Successful login"){
+        message = <Redirect to= "/dashboard"/>
+
+
+
+        
+        }
+        console.log(this.props.status);   
+        }
+
+      /*  if(cookie.load('cookie')){
+            console.log('testLoad');
+            redirectVar = <Redirect to= "/dashboard"/> */
+ 
+      console.log("message"+message);
         return(
             <div>
-                
+                {message}
             <div class="container">
                 
                 <div class="login-form">
@@ -123,22 +156,20 @@ class student extends Component{
                             <br></br> 
                             <br></br> 
                             <a href="/reg"> Signup</a>        
-                            {redirectVar}
 
                     </div>
                 </div>
             </div>
-        
             </div>
             
-        )
+        );
+        }
     }
-}
 
 function mapStateToProps(state) {
-    console.log(state)
+    console.log(state.loginReducer)
     return {
-      status: state.loginReducer.status
+     status: state.loginReducer.status
     };
   }
   
@@ -147,6 +178,7 @@ function mapStateToProps(state) {
       login: (values) => dispatch(login(values))
     }
   }
+
   
 export default connect(mapStateToProps, mapDispatchToProps)(student);
 //export Login Component
