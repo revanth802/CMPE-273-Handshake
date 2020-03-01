@@ -1,331 +1,9 @@
-
-
-/*
-class dashboard extends Component
-{
- 
-constructor(props) {
-    //Call the constrictor of Super class i.e The Component
-    super(props);
-    //maintain the state required for this component
-    this.state = {
-      
-        msg: [],
-        namevalue : "",
-        dobvalue : "",
-        cityvalue: "",
-        statevalue:"",
-        countryvalue:"",
-        studentAllDetailsResult: [],
-        studentAllEduDetailsResult: [],
-        studentAllWorkDetailsResult: [],
-        myJourney: [],
-        yearofPassing: "",
-        collegeName: "",
-        degree: "",
-        major: ""
-    }
-
-    this.namehandleChange = this.namehandleChange.bind(this);
-    this.dobhandleChange = this.dobhandleChange.bind(this);
-    this.cityhandleChange = this.cityhandleChange.bind(this);
-    this.statehandleChange = this.statehandleChange.bind(this);
-    this.countryhandleChange = this.countryhandleChange.bind(this);
-  }
-
-    namehandleChange(event) {
-      this.setState({namevalue: event.target.value});
-    }
-
-    dobhandleChange(event) {
-      this.setState({dobvalue: event.target.value});
-    }
-
-    cityhandleChange(event) {
-      this.setState({cityvalue: event.target.value});
-    }
-
-    statehandleChange(event) {
-      this.setState({statevalue: event.target.value});
-    }
-
-    countryhandleChange(event) {
-      this.setState({countryvalue: event.target.value});
-    }
-  
-    logout= ()=>{
-      console.log('logging out')
-      this.props.history.push('/student');
-    }
-
-    redirecttoUpdateProfilePage() {
-      this.props.history.push("/Profile");
-    }
-
-    componentDidMount(){
-      axios.get("http://localhost:3001/profile").then(response => {
-        //update the state with the response data
-        console.log("Details- ", response);
-        this.setState({
-          studentAllDetailsResult: this.state.studentAllDetailsResult.concat(
-            response.data
-          )
-        });
-        this.setState({
-          myJourney: this.state.myJourney.concat(response.data)
-        });
-      });
-      console.log("in componentDidMount");
-      axios.get("http://localhost:3001/profileEduDetails").then(response => {
-        //update the state with the response data
-        console.log("Education- ", response);
-        this.setState({
-          studentAllEduDetailsResult: this.state.studentAllEduDetailsResult.concat(
-            response.data
-          )
-        });
-      });
-      console.log("in componentDidMount");
-      axios.get("http://localhost:3001/profileWorkDetails").then(response => {
-        //update the state with the response data
-        console.log("Work- ", response);
-        this.setState({
-          studentAllWorkDetailsResult: this.state.studentAllWorkDetailsResult.concat(
-            response.data
-          )
-        });
-      });
-  }
-    
-    render()
-    {
-      var dis;
-      
-        dis=(
-    <Card className="text-center" bg="primary">
-        <Card.Header>WELCOME TO DASHBOARD</Card.Header>
-        <Card.Body>
-          <Card.Title> {sessionStorage.getItem('name')} </Card.Title>
-          <Card.Text>
-           
-          </Card.Text>
-          <Button variant="danger" onClick={this.logout}>Log Out!</Button>
-        </Card.Body>
-        <Card.Footer className="text-muted"></Card.Footer>
-        <br></br>
-      </Card>)
-
-
-let studentDetails1 = this.state.studentAllDetailsResult.map(
-  studentAllDetailResult => {
-    console.log("Id is  " + studentAllDetailResult.studentDetailsId);
-    return (
-      <div>
-        <form>
-          <input
-            class="editableinput2"
-            type="text"
-            placeholder={studentAllDetailResult.carrierObjective}
-            onChange={this.handlemyJourneyChange}
-          />
-          <button
-            class="editButton"
-            onClick={event =>
-              this.submitmyJourney(
-                event,
-                studentAllDetailResult.studentDetailsId,
-                "carrierObjective"
-              )
-            }
-          >
-            Apply Changes
-          </button>
-        </form>
-      </div>
-    );
-  }
-);
-
-  let studentWorkDetails = this.state.studentAllWorkDetailsResult.map(
-    studentAllWorkDetailResult => {
-      return (
-        <div class="card">
-          <form>
-            <input
-              onChange={e =>
-                this.handlemyWorkChange(
-                  e,
-                  studentAllWorkDetailResult.workExpDetailsId,
-                  "companyName"
-                )
-              }
-              class="editableinput"
-              name="companyName"
-              placeholder={studentAllWorkDetailResult.companyName}
-            ></input>
-            <br />
-            <br />
-            <input
-              onChange={e =>
-                this.handlemyWorkChange(
-                  e,
-                  studentAllWorkDetailResult.workExpDetailsId,
-                  "title"
-                )
-              }
-              class="editableinput"
-              name="title"
-              placeholder={studentAllWorkDetailResult.title}
-            ></input>
-            <br />
-            <br />
-            <input
-              onChange={e =>
-                this.handlemyWorkChange(
-                  e,
-                  studentAllWorkDetailResult.workExpDetailsId,
-                  "startDate"
-                )
-              }
-              class="editableinput"
-              name="startDate"
-              placeholder={studentAllWorkDetailResult.startDate}
-            ></input>
-            <br />
-            <br />
-            <input
-              onChange={e =>
-                this.handlemyWorkChange(
-                  e,
-                  studentAllWorkDetailResult.workExpDetailsId,
-                  "endDate"
-                )
-              }
-              class="editableinput"
-              name="endDate"
-              placeholder={studentAllWorkDetailResult.endDate}
-            ></input>
-            <button
-              class="editButton"
-              onClick={event =>
-                this.submitWorkDetails(
-                  event,
-                  studentAllWorkDetailResult.workExpDetailsId
-                )
-              }
-            >
-              Apply Changes
-            </button>
-          </form>
-        </div>
-      );
-    }
-  );
-
-  let studentEducationDetails = this.state.studentAllEduDetailsResult.map(
-    studentAllEduDetailResult => {
-      return (
-        <div class="card">
-          <form>
-            <input
-              onChange={e =>
-                this.handlemyEduChange(
-                  e,
-                  studentAllEduDetailResult.studentEduDetailsId,
-                  "collegeName"
-                )
-              }
-              name="collegeName" 
-              class="editableinput3"
-              type="text"
-              placeholder={studentAllEduDetailResult.collegeName}
-            ></input>
-            <br />
-            <br />
-            <input
-              onChange={e =>
-                this.handlemyEduChange(
-                  e,
-                  studentAllEduDetailResult.studentEduDetailsId,
-                  "degree"
-                )
-              }
-              class="editableinput"
-              name="degree"
-              placeholder={studentAllEduDetailResult.degree}
-            ></input>
-            <br />
-            <br />
-            <input
-              onChange={e =>
-                this.handlemyEduChange(
-                  e,
-                  studentAllEduDetailResult.studentEduDetailsId,
-                  "major"
-                )
-              }
-              class="editableinput"
-              name="major"
-              placeholder={studentAllEduDetailResult.major}
-            ></input>
-            <br />
-            <br />
-            <input
-              onChange={e =>
-                this.handlemyEduChange(
-                  e,
-                  studentAllEduDetailResult.studentEduDetailsId,
-                  "yearofPassing"
-                )
-              }
-              class="editableinput"
-              name="yearofPassing"
-              placeholder={studentAllEduDetailResult.yearofPassing}
-            ></input>
-
-            <button
-              class="editButton"
-              onClick={event =>
-                this.submitEduDetails(
-                  event,
-                  studentAllEduDetailResult.studentEduDetailsId
-                )
-              }
-            >
-              Apply Changes
-            </button>
-          </form>
-        </div>
-      );
-    }
-  );
-
-        
-    
-
-          return (
-            <body>
-              {dis}
-        
-            
-      
-              
-            </body>
-          );
-    }
-}
-
-export default dashboard;
-*/
-
 import React, { Component, useState } from "react";
 import "../../App.css";
 import axios from "axios";
 import cookie from "react-cookies";
 import { Redirect } from "react-router";
-import { Card, CardColumns, Form, Col, InputGroup, Button } from "react-bootstrap";
-//import updateAction from '../Actions/updateAction';
-import { connect } from 'react-redux';
+import { Card, CardColumns, Form, Col, Button } from "react-bootstrap";
 
 var dateFormat = require('dateformat');
 
@@ -335,13 +13,13 @@ class dashboard extends Component {
   constructor() {
     super();
     this.state = {
-      userDetails: "",
+      userDetails: [],
       showEdit: false
     };
   }
-  //get the books data from backend
+
   componentDidMount() {
-    console.log('responset');
+    console.log('response');
     var emailID;
     var url = new URL(window.location.href);
     var search_params = new URLSearchParams(url.search);
@@ -353,15 +31,16 @@ class dashboard extends Component {
         emailID = cookie.load('userName');
       }
     }
-    axios.post('http://localhost:3001/userDetails/', {
-      emailId: emailID
-    }).then(response => {
+
+    console.log(emailID);
+
+    axios.get('http://localhost:3001/userDetails/') .then((response) => {
       //update the state with the response data
       console.log('response', response.data);
       this.setState({
-        userDetails: response.data
+        userDetails: response.data["results"]
       });
-      this.setState(response.data); //Initial Values
+      this.setState(response.data["results"]); //Initial Values
     });
   }
 
@@ -385,20 +64,6 @@ class dashboard extends Component {
     console.log('User Details',this.state.userDetails);
     console.log('User Details',this.state);
 
-  //  this.props.updateAction(this.state);
-
-    /*axios.post('http://localhost:3001/updateUser', this.state)
-      .then(response => {
-        if (response.data === 'Error') {
-          this.setState({ showUniqueError: true });
-        } else {
-          this.setState({ redirectToHome: true });
-        }
-        console.log("Status Code : ", response.data);
-      })
-      .catch(errors => {
-        console.log('Error' + errors);
-      });*/
   }
 
   handleChange = (e) => {
@@ -430,22 +95,24 @@ class dashboard extends Component {
         console.log('Error' + errors);
       });
   }
-  //this.state.showEdit = true;
+ 
 
 
 
   render() {
-    var dis;
+    var dis,dashboard;
       
         dis=(
-    <Card className="text-center" bg="primary">
+    <Card className="text-center" bg="primary" >
         <Card.Header>WELCOME TO DASHBOARD</Card.Header>
         <Card.Body>
-          <Card.Title> {sessionStorage.getItem('name')} </Card.Title>
+          <Card.Title> <h1>{sessionStorage.getItem("name")}</h1></Card.Title>
           <Card.Text>
            
           </Card.Text>
+          <button onClick={this.editForm} class="btn btn-success" >Edit</button>
           <Button variant="danger" onClick={this.logout}>Log Out!</Button>
+          
         </Card.Body>
         <Card.Footer className="text-muted"></Card.Footer>
         <br></br>
@@ -455,14 +122,13 @@ class dashboard extends Component {
     if (!cookie.load('cookie')) {
       redirectVar = <Redirect to="/login" />
     }
-    var userDetails = this.state.userDetails;
+    // var userDetails = this.state.userDetails;
     var showEdit = this.state.showEdit;
 
     let message1 = null;
         let message2 = null;
-        message1 = this.props.status == 200 ? "Updated" : null;
-        message2 = this.props.status == 401?"Error" : null;
-    
+    console.log(this.state.userDetails);
+    dashboard = this.state.userDetails.map(userDetails => {
     return (
       <div>
         {dis}
@@ -471,10 +137,10 @@ class dashboard extends Component {
             {message1}
             {message2}
             <CardColumns>
-              <Card>
-                <Card.Img variant="top" src="" />
+              <Card bg="secondary">
+           
                 <Card.Body>
-                  <Card.Title>{userDetails.name}</Card.Title>
+                  <Card.Title>Name : {userDetails.name}</Card.Title>
                   <Card.Text>Email Id : {userDetails.emailID}</Card.Text>
                 </Card.Body>
               </Card>
@@ -517,7 +183,7 @@ class dashboard extends Component {
                 </Card.Body>
               </Card>
             </CardColumns>
-            <button onClick={this.editForm} class="btn btn-success" >Edit</button>
+         
           </div>
         }
 
@@ -712,7 +378,7 @@ class dashboard extends Component {
           </Form.Control.Feedback>
               </Form.Group>
             </Form.Row>
-
+<br></br>
             
             <Button onClick={this.updateForm}>Update Details</Button>
 
@@ -720,24 +386,12 @@ class dashboard extends Component {
         }
       </div>
     );
+      });
+      return <div>{dashboard}</div>
+    
   }
-}
-/*
 
-function mapStateToProps(state) {
-  console.log(state)
-  return {
-    status: state.updateReducer.status
-  };
-}
-
-const mapDispatchToProps = dispatch => {
-  return {
-    updateAction: (values) => dispatch(updateAction(values))
-  }
 }
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(dashboard);
-*/
 export default dashboard;

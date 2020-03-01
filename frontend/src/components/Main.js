@@ -10,14 +10,13 @@ import dashboard from './student/dashboard';
 import company from './company/company';
 import cdashboard from './company/cdashboard';
 import creg from './company/creg';
-import {Provider} from 'react-redux';
-import store from '../js/store/index'
+
 
 
 class Main extends Component {
     render(){
         return(
-            <Provider store = {store} >
+          
             <div>
                 {/*Render Different Component based on Route*/}
                 <Route path="/" component={navbar}/>
@@ -30,7 +29,7 @@ class Main extends Component {
            
                
             </div>
-            </Provider>
+       
         )
     }
 }

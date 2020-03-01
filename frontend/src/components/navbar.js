@@ -25,7 +25,7 @@ class Navbar extends Component {
             console.log("Able to read cookie");
             navLogin = (
                 <ul class="nav navbar-nav navbar-right">
-                        <li><Link to="/" onClick = {this.handleLogout}><span class="glyphicon glyphicon-user"></span>Logout</Link></li>
+                        <li><Link to="/student" onClick = {this.handleLogout}><span class="glyphicon glyphicon-user"></span>Logout</Link></li>
                 </ul>
             );
         }else{
@@ -33,7 +33,7 @@ class Navbar extends Component {
             console.log("Not Able to read cookie");
             navLogin = (
                 <ul class="nav navbar-nav navbar-right">
-                        <li><Link to="/login"><span class="glyphicon glyphicon-log-in" fa-5x></span> Login</Link></li>
+                        <li><Link to="/student"><span class="glyphicon glyphicon-log-in" fa-5x></span> Login</Link></li>
                 </ul>
             )
         }
@@ -43,27 +43,56 @@ class Navbar extends Component {
         }
     
         return(
+            /*
             <div >
                 {redirectVar}
     
-                <nav class="navbar" style={{background: "#4034eb"}} >
-                <div class="container-fluid">
+                <nav>
+                <div>
                     
                     </div>
-                    <ul class="nav navbar-nav">
-                        <li class="nav-item"><img src={log1} alt="handshake" height="50" width="50"/></li>
-                        <li class="active"> <Link to='/student'  style={{color:"#fff",fontWeight:"bold"}}>Student</Link></li>
-                        <li class="nav-link"><Link to='/company' style={{color:"#fff",fontWeight:"bold"}}>Company</Link></li>
-                        <li class="nav-item"><Link to='/events' style={{color:"#fff",fontWeight:"bold"}}>Events</Link></li>
-                        <li> <ReactSearchBox></ReactSearchBox></li>
+                    
+                    
+
+                    <nav class="navbar navbar-dark bg-primary">
+                        
+                    <ul class="navar-inverse">
+                        <li ><img src={log1} alt="handshake" height="50" width="50"/></li>
+                        <li > <Link to='/student'  style={{color:"#fff",fontWeight:"bold"}}>Student</Link></li>
+                        <li ><Link to='/company' style={{color:"#fff",fontWeight:"bold"}}>Company</Link></li>
+                        <li ><Link to='/events' style={{color:"#fff",fontWeight:"bold"}}>Events</Link></li>
+                     
                     </ul>
+ 
+</nav>
+
                     {navLogin}
               
             </nav>
+            */
 
           
-        </div>
+     
     
+    <div>
+            
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+            <li ><img src={log1} alt="handshake" height="50" width="50"/></li>
+             
+            </div>
+            <ul class="nav navbar-nav">
+          <li> <a class="navbar-brand">Handshake</a></li>
+                <li class="active"><Link to="/student">Students</Link></li>
+                <li><Link to="/company">Company</Link></li>
+                <li><Link to="/">Jobs</Link></li>
+                <li><Link to="/events">Events</Link></li>
+            </ul>
+            {/* {navLogin} */}
+        </div>
+    </nav>
+</div>
            
        
         

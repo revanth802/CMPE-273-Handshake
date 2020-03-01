@@ -65,13 +65,11 @@ app.use(function(req, res, next) {
 app.post('/login',function(req,res){
   sessvar=req.session;
     console.log("Inside Login Post Request");
-    //console.log("Req Body : ", username + "password : ",password);
     console.log("Req Body : ",req.body);
     
-
         let email= req.body.username;
         let password1 = req.body.password;
-        con.query('SELECT * FROM student_basicdetails WHERE emailId = ?',[email], function (error, results, fields) {
+        con.query('SELECT * FROM userDetails WHERE emailID = ?',[email], function (error, results, fields) {
         if (error) {
           console.log("error ocurred",error);
           res.send("err");
@@ -79,8 +77,9 @@ app.post('/login',function(req,res){
           // console.log('The solution is: ', results);
           if(results.length >0){
             if(results[0].password == password1){
-              sessvar.student_id = results[0].student_id;
-              console.log(sessvar.student_id);
+             sessvar.emailID = results[0].emailID;
+             req.session.emailID=sessvar.emailID;
+      console.log("sess:"+sessvar.emailID);
            
               console.log('success');
              res.cookie("userName", email, {
@@ -195,7 +194,7 @@ app.post('/creg', function (req, res) {
     
         let data=[req.body.name,req.body.email,req.body.password,req.body.collegename] 
     
-        con.query('INSERT into student_basicdetails(name,emailid,password,collegename) VALUES(?,?,?,?)',[req.body.name,req.body.email,req.body.password,req.body.collegename], 
+        con.query('INSERT into userDetails(name,emailID,password,collegeName) VALUES(?,?,?,?)',[req.body.name,req.body.email,req.body.password,req.body.collegename], 
         function (error, results, fields) {
           if (error) {
             console.log("error ocurred",error);
@@ -233,23 +232,18 @@ app.post('/creg', function (req, res) {
       
   })
   
-    app.post('/userDetails', function(req,res){
-    var emailId = "'"+req.body.emailId+"'";
-    //if(emailId){
-        //var emailId = "'"+req.params.emailId+"'";
-   // }
-    var dbQuery = "Select * from student_basicdetails Where emailID = " + emailId;
+    app.get('/userDetails', function(req,res){
+    
+    if(emailId)
+        var emailId = req.params.emailId;
    
-    con.query(
-        dbQuery,
-        (err, rows) => {
-        if (err) throw err;   
-        console.log('Data received from Db:\n');
-        console.log(rows);
-        res.body = rows;
-        return res.send(rows[0]);
-        }
-    );
+   console.log("here "+ req.session.emailID);
+   
+    con.query( 'SELECT * from userDetails where emailID= ?',[req.session.emailID], function(error,results)
+      {
+          res.json({results});
+          console.log(results);
+      });
       })
 
 

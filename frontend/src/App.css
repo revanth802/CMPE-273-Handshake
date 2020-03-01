@@ -7,6 +7,18 @@ h2
 }
 
 
+.card
+{
+background-color: lightblue;
+margin-left: 450px;
+margin-right: 450px;
+margin-bottom:50px;
+font-size: medium;
+font-weight: 600;
+padding: 50px;
+text-align: center;
+}
+
 button
 {
   initial-letter-align: center;
