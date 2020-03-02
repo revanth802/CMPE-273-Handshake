@@ -4,6 +4,7 @@ import axios from "axios";
 import cookie from "react-cookies";
 import { Redirect } from "react-router";
 import { Card, CardColumns, Form, Col, Button } from "react-bootstrap";
+import gr from '../../assets/images/Handshake.jpg';
 
 var dateFormat = require('dateformat');
 
@@ -103,6 +104,8 @@ class dashboard extends Component {
     var dis,dashboard;
       
         dis=(
+     <div><img src={gr} style={{float:"left",height:"400px",width:"300px",marginLeft:"20px",borderRadius:"50%"}} /> 
+ 
     <Card className="text-center" bg="primary" >
         <Card.Header>WELCOME TO DASHBOARD</Card.Header>
         <Card.Body>
@@ -116,7 +119,8 @@ class dashboard extends Component {
         </Card.Body>
         <Card.Footer className="text-muted"></Card.Footer>
         <br></br>
-      </Card>)
+      </Card>
+      </div>)
 
     let redirectVar = null;
     if (!cookie.load('cookie')) {
@@ -145,7 +149,7 @@ class dashboard extends Component {
                 </Card.Body>
               </Card>
               <Card>
-                <Card.Header>Career Objective</Card.Header>
+                <Card.Header>Career Objective: </Card.Header>
                 <Card.Body>
                   <Card.Title>{userDetails.careerObjective}</Card.Title>
                 </Card.Body>

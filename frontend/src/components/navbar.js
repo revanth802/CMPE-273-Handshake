@@ -92,6 +92,8 @@ class Navbar extends Component {
             {/* {navLogin} */}
         </div>
     </nav>
+
+
 </div>
            
        

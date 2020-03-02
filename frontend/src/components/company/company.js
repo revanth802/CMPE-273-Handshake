@@ -90,6 +90,7 @@ class company extends Component{
         return(
             <div>
                  {redirectVar}
+            
             <div class="container">
                 
                 <div class="login-form">

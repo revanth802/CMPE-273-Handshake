@@ -4,7 +4,7 @@ import axios from 'axios';
 import cookie from 'react-cookies';
 import {Redirect} from 'react-router';
 import { Link } from 'react-router-dom';
-// import log1 from '../../assets/images/handshakelogo.png'
+
 
 
 //Define a Login Component
@@ -113,6 +113,7 @@ class student extends Component{
         return(
             <div>
                {redirectVar}
+        
             <div class="container">
                 
                 <div class="login-form">

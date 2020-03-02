@@ -112,7 +112,7 @@ app.post('/clogin',function(req,res){
 
       let email= req.body.username;
       let password1 = req.body.password;
-      con.query('SELECT * FROM company WHERE emailid = ?',[email], function (error, results, fields) {
+      con.query('SELECT * FROM Company WHERE emailid = ?',[email], function (error, results, fields) {
       if (error) {
         console.log("error ocurred",error);
         res.send("err");
@@ -164,7 +164,7 @@ app.post('/creg', function (req, res) {
 
     let data=[req.body.cname,req.body.email,req.body.password,req.body.location] 
 
-    con.query('INSERT into company(companyname,emailid,pwd,location) VALUES(?,?,?,?)',[req.body.cname,req.body.email,req.body.password,req.body.location], 
+    con.query('INSERT into Company(companyname,emailid,pwd,location) VALUES(?,?,?,?)',[req.body.cname,req.body.email,req.body.password,req.body.location], 
     function (error, results, fields) {
       if (error) {
         console.log("error ocurred",error);
