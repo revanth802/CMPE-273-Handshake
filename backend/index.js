@@ -246,6 +246,56 @@ app.post('/creg', function (req, res) {
       });
       })
 
+      app.post('/upd', function(req,res){
+        console.log("update");
+        var collegeName = req.body.collegeName;
+        var profilePic = req.body.profilePic;
+        var careerObjective = req.body.careerObjective;
+        var education = req.body.education;
+        var skillset = req.body.skillset;
+        var dob = req.body.dob;
+        var city = req.body.city;
+        var state = req.body.state;
+        var country = req.body.country;
+        var collegeLocation = req.body.collegeLocation;
+        var degree = req.body.degree;
+        var major = req.body.major;
+        var yearOfPassing = req.body.yearOfPassing;
+        var currentCGPA = req.body.currentCGPA;
+        var expCompanyName = req.body.expCompanyName;
+        var expCompanyTitle = req.body.expCompanyTitle;
+        var expLocation = req.body.expLocation;
+        var expStartD = req.body.expStartDate;
+        var expEndD = req.body.expEndDate;
+        var expDescription = req.body.expDescription;
+        var resume = req.body.resume;
+        var name = req.body.name;
+        var emailID = req.body.emailID;
+        var contactNo = req.body.contactNo;
+    
+        var dbQuery = "UPDATE userDetails SET name='"+name+"', collegeName='"+ collegeName+"', careerObjective='"+ careerObjective+"', careerObjective='"+ careerObjective+"', education='"+ education+"', skillset='"+ skillset+"', dob='"+ dob+"', city='"+ city+"', state='"+ state+"', country='"+ country+"', collegeLocation='"+ collegeLocation+"', degree='"+ degree+"', major='"+ major+"', yearOfPassing='"+ yearOfPassing+"', currentCGPA='"+ currentCGPA+"', expCompanyName='"+ expCompanyName+"', expCompanyTitle='"+ expCompanyTitle+"', expLocation='"+ expLocation+"', expStartDate='"+ expStartD+"', expEndDate='"+ expEndD+"', expDescription='"+ expDescription+"', resume='"+ resume +"',contactNo = '" + contactNo +"' WHERE emailID = '" + emailID + "'"; 
+    
+        con.query(
+            dbQuery,
+            (err, rows) => {
+                if (err){
+                    console.log('error while updating'+err);
+                    res.writeHead(401, {
+                        "Content-Type": "text/plain"
+                    });
+                    res.end("Error Occurred");
+                }else{
+                    console.log('server response while updating');
+                    res.writeHead(200, {
+                        "Content-Type": "text/plain"
+                    });
+                    res.end("User Updated");
+                } 
+                console.log(rows)
+            }
+        );
+    });
+    
 
 //start your server on port 3001
 app.listen(3001);

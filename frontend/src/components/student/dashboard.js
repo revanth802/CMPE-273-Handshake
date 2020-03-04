@@ -59,11 +59,43 @@ class dashboard extends Component {
   updateForm = (e) => {
     this.setState({ showEdit: false });
     //set the with credentials to true
+    const data={
+      collegeName : this.state.collegeName,
+         profilePic : this.state.profilePic,
+         careerObjective : this.state.careerObjective,
+         education : this.state.education,
+        skillset: this.state.skillset,
+        dob : this.state.dob,
+       city : this.state.city,
+        state: this.state.state,
+       country : this.state.country,
+        collegeLocation : this.state.collegeLocation,
+       degree : this.state.degree,
+      major : this.state.major,
+        yearOfPassing : this.state.yearOfPassing,
+         currentCGPA : this.state.currentCGPA,
+         expCompanyName : this.state.expCompanyName,
+         expCompanyTitle : this.state.expCompanyTitle,
+         expLocation : this.state.expLocation,
+         expStartD : this.state.expStartDate,
+         expEndD : this.state.expEndDate,
+         expDescription : this.state.expDescription,
+         resume : this.state.resume,
+         name : this.state.name,
+         emailID : this.state.emailID,
+         contactNo : this.state.contactNo
+    }
     axios.defaults.withCredentials = true;
     //make a post request with the user data
-    var data;
-    console.log('User Details',this.state.userDetails);
-    console.log('User Details',this.state);
+    axios.post('http://localhost:3001/upd/',data) .then((response) => {
+      //update the state with the response data
+      console.log('response', response.data);
+      this.setState({
+        userDetails: response.data["results"]
+      });
+      this.setState(response.data["results"]); //Initial Values
+    });
+   
 
   }
 
