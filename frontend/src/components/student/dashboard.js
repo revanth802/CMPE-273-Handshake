@@ -158,12 +158,13 @@ class dashboard extends Component {
     if (!cookie.load('cookie')) {
       redirectVar = <Redirect to="/login" />
     }
-    // var userDetails = this.state.userDetails;
+    var userDetails = this.state.userDetails;
     var showEdit = this.state.showEdit;
 
     let message1 = null;
         let message2 = null;
     console.log(this.state.userDetails);
+
     dashboard = this.state.userDetails.map(userDetails => {
     return (
       <div>
