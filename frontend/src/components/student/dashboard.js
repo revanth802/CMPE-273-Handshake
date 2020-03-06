@@ -85,7 +85,7 @@ class dashboard extends Component {
          emailID : this.state.emailID,
          contactNo : this.state.contactNo
     }
-    axios.defaults.withCredentials = true;
+ 
     //make a post request with the user data
     axios.post('http://localhost:3001/upd/',data) .then((response) => {
       //update the state with the response data

@@ -10,6 +10,7 @@ class company extends Component{
     constructor(props){
         //Call the constrictor of Super class i.e The Component
         super(props);
+        
         //maintain the state required for this component
         this.state = {
             username : "",
