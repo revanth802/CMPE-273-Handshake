@@ -1,7 +1,5 @@
 import React,{ Component } from "react";
 import axios from "axios";
-import dateFormat from 'dateformat';
-import Popup from "reactjs-popup";
 import {Redirect} from 'react-router';
 
 
@@ -175,17 +173,15 @@ viewapplications = (e,jobid) =>
 render() {
 
 
-    let rendermsg = null;
-    rendermsg = this.state.msg;
+    let rendermsg = this.state.msg;
     const isLoggedIn = this.state.isLoggedIn;
     var button;
     var signupform;
     var loginform;
-    var msgstudent;
   
     var  redirectVar;
 
-   if(this.state.authFlag == 2)
+   if(this.state.authFlag === 2)
    {
            redirectVar = <Redirect to="/viewapplications" />
 
@@ -329,7 +325,7 @@ render() {
         
             console.log("logged In inside console")
            
-            const element = <Welcome name="Sara" />;
+           
 
             
 

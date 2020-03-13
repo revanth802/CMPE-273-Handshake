@@ -1,6 +1,5 @@
 import React,{ Component } from "react";
 import axios from "axios";
-import dateFormat from 'dateformat';
 import Popup from "reactjs-popup";
 
 class ViewEventApplications extends Component

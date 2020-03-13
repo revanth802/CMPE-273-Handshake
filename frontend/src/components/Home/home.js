@@ -111,7 +111,7 @@ return (<h1>sss</h1>);
 						<h3>{job.postion}</h3>
                         <p> {job.job_desc}, {job.job_location} </p>
                         <p> {job.category} </p>
-                        {this.state.savedapp}
+                        
                         <button  style = {{width :'50px',height:'30px'}} id="saveEducationButton" ref={ref => this.saveEducationButton = ref} value="Apply" onClick = {(e)=>this.saveApplication(job.job_id)}>Apply </button>
             <Popup trigger={<a style = {{float:'right', fontWeight:500}}> {job.company_name} </a>}
                          modal
@@ -130,6 +130,7 @@ return (<h1>sss</h1>);
         }
         return(
             <div  align="center">
+                
                              <img src ={require("../Util/what.jpg") } style={{float:"center",height:"200px",width:"1000px"}} alt="hs"/>
                              <br></br>
 
@@ -146,15 +147,17 @@ return (<h1>sss</h1>);
               <option value="Part Time">Part Time</option>
              
             </select>
-            &nbsp;
+          
+            <br></br>
             <input
               name="text"
               type="text"
               class="searchComponent"
-              placeholder="Enter the Job Category"
+              placeholder="Search for Job Title"
               onChange={event => this.handleOnChange(event)}
               value={this.state.searchValue}
             />
+            <br></br>
             <button style={{width:"200px"}} onClick={event =>
                   this.searchforprofile(
                     event
@@ -162,7 +165,7 @@ return (<h1>sss</h1>);
                 {redirectVar}
                 <div className="container">
                     <h2>List of All jobs</h2>
-                        
+                 <p style={{alignContent:"center",color:"red"}}>  {this.state.savedapp}  </p> 
                             <div>
                              {details}
                             </div>

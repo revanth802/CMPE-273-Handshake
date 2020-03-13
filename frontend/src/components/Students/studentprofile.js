@@ -3,7 +3,6 @@ import '../../App.css';
 import axios from 'axios';
 import cookie from 'react-cookies';
 import {Redirect} from 'react-router';
-import { compareAsc, format } from 'date-fns'
 
 class Profile extends Component {
     constructor(props){
@@ -56,7 +55,7 @@ class Profile extends Component {
         let basicDetails = this.state.studentObject.map(obj=>{
             return (
                 <div key = {obj.student_id} >
-                    <img style = {{width:'75%'}} src ={require("../Util/Handshake.jpg") }></img> 
+                    <img style = {{width:'75%'}} src ={require("../Util/Handshake.jpg") } alt="hs"></img> 
                     
                     <p style = {{fontWeight: 'bold'}}>First Name:</p>
                     <p>{obj.first_name}</p>

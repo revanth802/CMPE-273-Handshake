@@ -218,25 +218,36 @@ vieweventapplications = (e,eventid) =>
     })
 }
 
-applyforevent = (e,eventid) =>
+applyforevent = (e,eventid,eligibility) =>
 {
   console.log("in view", eventid);
   const data = {
-    eventid : eventid
+    eventid : eventid,
+    eligibility : eligibility
 }
 console.log("in event", eventid)
 axios.post("http://localhost:8080/applyforevent", data).then(response => {
 console.log("applyreg",response.data);
-if(response.status === 200)
+if(response.data === "success")
 {
   this.setState({
     eventmsg : "Applied successfully"
   })
 }
-});
-    console.log("Apply");
+else{
+  if(response.data === "fail")
+  {
+    this.setState({
+      eventmsg : "Not Eligible to Register"
+    })
+  }
 }
-  
+});
+    
+}
+
+
+
 render() {
 
 
@@ -316,10 +327,13 @@ render() {
                     <h3>{event.event_name}</h3>
                         <h4>{event.event_desc}</h4>
                         <p> {event.event_time}, {event.location} </p>
+                        <p>{event.eligibility}</p>
                         <button onClick={e =>
                           this.applyforevent(
                             e,
-                            event.event_id
+                            event.event_id,
+                            event.eligibility
+                      
                           )} style = {{align :'right'}}> Apply </button>
                        
                 </div>
@@ -352,6 +366,7 @@ render() {
             <h3>{event.event_name}</h3>
                 <h4>{event.event_desc}</h4>
                 <p> {event.event_time}, {event.location} </p>
+                <p> {event.eligibility} </p>
       
                
         </div>
@@ -382,7 +397,7 @@ render() {
               onChange={event => this.handleOnChange(event)}
               value={this.state.searchValue}
             />
-            &nbsp;
+            <br></br>
             <button style={{width:"100px"}} onClick={event =>
                   this.searchforeventname(
                     event

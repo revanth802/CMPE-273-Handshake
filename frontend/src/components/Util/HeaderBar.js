@@ -3,7 +3,6 @@ import '../../App.css';
 import {Link} from 'react-router-dom';
 import cookie from 'react-cookies';
 import axios from 'axios';
-import {Redirect} from 'react-router';
 
 //create the Navbar Component
 class Navbar extends Component {
@@ -95,7 +94,7 @@ class Navbar extends Component {
             console.log("Not Able to read cookie");
             image = (
                 
-                    <img style = {{width:'100%',height:'100%',marginTop:'-20px'}}src={require('./Handshake.jpg')} />
+                    <img style = {{width:'100%',height:'100%',marginTop:'-20px'}}src={require('./Handshake.jpg')} alt="hs" />
                      )
             
             console.log({image})

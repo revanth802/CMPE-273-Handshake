@@ -65,18 +65,19 @@ app.post('/submitnewjob', async function(request, response) {
 
 
 console.log("datase from frontend"+request.body);
-    var sql = "INSERT INTO `job_postings`(`fk_company_id`, `category`,`postion`,`job_desc`,`job_location`,`job_long_desc`,`job_postingdate`,`application_deadline`,`salary`) VALUES ('" + request.session.company_id + "','" + jobtitle + "','" +jobtitle +"','"+ jobdescription + "','"+ jobdescription + "','" + location  +  "','" + posting + "','" + applicationdeadline + "','" + salary + "')";
+    var sql = "INSERT INTO `job_postings`(`fk_company_id`, `category`,`postion`,`job_desc`,`job_location`,`job_posting`,`application_deadline`,`salary`) VALUES ('" + request.session.company_id + "','" + category + "','" +jobtitle +"','"+ jobdescription + "','" + location  +  "','" + posting + "','" + applicationdeadline + "','" + salary + "')";
 
     connection.query(sql , async function(error, results) 
     {
         var results = await getResults(sql);
-    });
-
-    console.log("results from job_postings",results);
+        console.log("results from job_postings",results);
     if(results)
     {
     response.send("success");
     }
+    });
+
+    
 });
 
 
@@ -327,9 +328,10 @@ app.get('/profile/:id', function(request, response) {
 	//response.end();
 });
 
-var studentids = [];
+
 app.post('/showapplication',async function(request,response)
 {
+    var studentids = [];
 sessvar = request.session;
 console.log("inside showapplication",request.body.jobid);
 sessvar.jobid = request.body.jobid;
@@ -432,17 +434,30 @@ app.post('/applyforevent',async function(request,response){
 
     var studentId = request.session.company_id;
     var eventid = request.body.eventid;
+    
+    var eligibility = request.body.eligibility;
+    console.log("eligibility", eligibility);
     console.log("studentid",studentId);
     console.log("eventid",eventid);
     var values  = ["applied",studentId,eventid];
+    var selectvalues = [studentId];
+    var selectquery = "select course from student_educational_details where fk_student_id = ? "
+    studentresults = await getResults(selectquery,selectvalues);
+    console.log("studentresults",studentresults[0].course);
+    
+    if(studentresults[0].course === eligibility || eligibility === "All")
+    {
     var insertQuery = "insert into map_student_events(application_status,fk_student_id,fk_event_id) values ('" + "applied" + "','"+studentId+"','" + eventid + "')";
     console.log("insertQuery",insertQuery);
     results = await getResults(insertQuery);
+    response.send("success");
+    }
+    else
+    {
+        response.send("fail");
+    }
    // values = [1]
    console.log("affected rows",results.affectedRows);
-
-   
-    response.send(""+results.affectedRows);
 })
 
 
@@ -614,6 +629,7 @@ app.get('/error',function(rqst,response){
 });
 
 app.listen(8080);
+console.log("Server Listening...")
 
 
 app.get('/tabHeaders',async function(request,response){

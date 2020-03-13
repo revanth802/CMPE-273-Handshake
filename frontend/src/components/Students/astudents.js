@@ -1,8 +1,7 @@
 import React,{ Component } from "react";
 import axios from "axios";
-import dateFormat from 'dateformat';
 import Popup from "reactjs-popup";
-import Card from "react-bootstrap";
+
 class StudentList extends Component
 {
 
@@ -97,7 +96,6 @@ class StudentList extends Component
     updatethestatus = (studentid) =>
     {
       console.log("inside update the status");
-      var msg;
       const data = 
       {
     applicationstatus : this.state.status,
@@ -115,7 +113,6 @@ class StudentList extends Component
         if (response.status === 200) 
         {
          
-           msg = response.data;
            
           console.log("Updated application status successfully");
         }
@@ -130,8 +127,6 @@ class StudentList extends Component
 render()
 {
  
-  var sessvariable;
-    // sessvariable = sessionStorage.getItem("jobid");
     var msgstudent;
     msgstudent = (
 
@@ -151,7 +146,7 @@ render()
 
                        <div style={{fontWeight: 500}}>{this.state.statustext}</div>
                 
-                       <Popup
+                       <Popup size="lg"
       trigger={<button className="button" onClick={this.xy} style={{width:"25%"}}> View Profile </button>}
       position="center"
       closeOnDocumentClick
@@ -171,7 +166,6 @@ render()
       </table>
       
       </Popup>
-                                {/* <button  style = {{float :'right',width :'100px',height:'30px'}} onClick = {(e)=>this.viewProfile(student.student_id)}> View Profile</button> */}
                                 </p>
                         </div>
                         </div>    

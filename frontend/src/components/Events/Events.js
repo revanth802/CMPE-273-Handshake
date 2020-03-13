@@ -1,7 +1,5 @@
 import React,{ Component } from "react";
 import axios from "axios";
-import dateFormat from 'dateformat';
-import Popup from "reactjs-popup";
 import {Redirect} from 'react-router';
 
 
@@ -199,18 +197,16 @@ vieweventapplications = (e,eventid) =>
 render() {
 
 
-    let rendermsg = null;
-    rendermsg = this.state.msg;
+    let rendermsg =  this.state.msg;
     const isLoggedIn = this.state.isLoggedIn;
     var button;
     var signupform;
     var loginform;
-    var msgstudent;
-    var registerbutton;
+    
   
     var  redirectVar;
 
-   if(this.state.authFlag == 2)
+   if(this.state.authFlag === 2)
    {
            redirectVar = <Redirect to="/vieweventapplications" />
 
@@ -327,9 +323,9 @@ render() {
               <label for="cars">Choose the Eligibility:</label>
     <select onChange = {this.eligibilty} id="cars" name="carlist" form="carform">
     <option value="All">ALL</option>
-    <option value="SE Graduates">SE Graduates</option>
-    <option value="MBA">EE Graduates</option>
-    <option value="CE Graduates">CE Graduates</option>
+    <option value="SE">SE Graduates</option>
+    <option value="EE">EE Graduates</option>
+    <option value="CE">CE Graduates</option>
     </select>              
               
               </div>
@@ -353,7 +349,7 @@ render() {
         
             console.log("logged In inside console")
            
-            const element = <Welcome name="Sara" />;
+            
 
             
         loginform =  (  

@@ -81,7 +81,7 @@ class Applications extends Component {
             redirectVar = <Redirect to= "/login"/>
         }
         return(
-            <div>
+            <div align="center">
                 <select
               placeholder="Select Status"
               defaultValue=""
