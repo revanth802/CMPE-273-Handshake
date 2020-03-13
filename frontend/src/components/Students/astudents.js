@@ -146,12 +146,16 @@ render()
 
                        <div style={{fontWeight: 500}}>{this.state.statustext}</div>
                 
-                       <Popup size="lg"
+                       <Popup 
+                       modal
+                       overlayStyle={{ background: "rgba(255,255,255,0.98" }}
+                       style={{width:"100%",height:"100%"}}
       trigger={<button className="button" onClick={this.xy} style={{width:"25%"}}> View Profile </button>}
       position="center"
       closeOnDocumentClick
       >
       <table>
+        <h1> Student Profile of: {student.first_name} {student.last_name}</h1>
       <tr>
       <td>First name: {student.first_name}</td>
       </tr>
@@ -166,6 +170,7 @@ render()
       </table>
       
       </Popup>
+    
                                 </p>
                         </div>
                         </div>    
@@ -177,7 +182,7 @@ render()
   
 
     return(
-      <div>
+      <div align="center">
            
             <input
               name="text"
@@ -187,6 +192,7 @@ render()
               onChange={event => this.handleOnChange(event)}
               value={this.state.searchValue}
             />
+            <br></br>
             <button style={{width:"200px"}} onClick={event =>
                   this.searchforskill(
                     event

@@ -19,7 +19,7 @@ class Events extends Component {
                     console.log(response.data);
                 //update the state with the response data
                 this.setState({
-                    events : this.state.events.concat(response.data) 
+                    events : this.state.response.data
                 });
             });
     }

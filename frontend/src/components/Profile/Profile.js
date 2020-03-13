@@ -4,6 +4,7 @@ import cookie from 'react-cookies';
 import {Redirect} from 'react-router';
 import {fetchProfile,saveExperience,saveEducation, saveStudentObject, deleteExperience, deleteEducation} from '../../ReduxModules/actions/index';
 import {connect} from 'react-redux';
+import axios from 'axios';
 
 class Profile extends Component {
     constructor(){
@@ -21,7 +22,10 @@ class Profile extends Component {
             isEduAddEnabled:false,
             isExpAddEnabled:false,
             newStudentEducation:[],
-            newStudentExperience:[]
+            newStudentExperience:[],
+            fileData: null,
+            authFlag : 0
+        
         }
         this.state = this.initialState;
         
@@ -42,7 +46,14 @@ class Profile extends Component {
         this.EditBasicDetails = this.EditBasicDetails.bind(this)
 
         this.deleteHandler = this.deleteHandler.bind(this);
+        this.onFileChange =this.onFileChange.bind(this);
+        this.buildAvatarUrl = this.buildAvatarUrl.bind(this);
     }  
+
+    buildAvatarUrl(fileName) {
+        console.log("calling backend", fileName);
+        return "localhost:3000" + "/file/" + fileName + "/?role=resumes";
+      }
 
       AddExperience(){
         this.setState({
@@ -81,10 +92,30 @@ class Profile extends Component {
     }
     }
 
+    onFileChange(e,id){
+        let fileData = new FormData()
+        console.log('fileData in state',this.state.fileData)
+        fileData.append("file", e.target.files[0])
+        console.log('fileData modified',fileData)
+        this.setState({
+            fileData : e.target.files[0],
+            openPopup:true
+          })
+    }
+
+   save=() =>
+   {
+       this.setState({
+           authFlag : 1
+       })
+   }
+
     EditExperience(){
         this.setState({
             isExpSaveEnabled:true})
     }
+
+  
 
     EditEducation(){
         this.setState({
@@ -111,7 +142,8 @@ class Profile extends Component {
 
     EditBasicDetails(){
         this.setState({
-            isBasicSaveEnabled:true
+            isBasicSaveEnabled:true,
+            authFlag:1
         })
     }
 
@@ -249,6 +281,9 @@ class Profile extends Component {
     render(){
         
         //if not logged in go to login page
+        var img1= null;
+        if(this.state.authFlag===1)
+        img1 = <img style = {{width:'80%',borderRadius:"50%"}} src ={require("../Util/lo.png") }></img>
         
         let contactDetails =  this.props.studentObject?.map(obj => {
             return(
@@ -290,7 +325,11 @@ class Profile extends Component {
         let basicDetails = this.props.studentObject?.map(obj=>{
             return (
                 <div key = {obj.student_id} className = "form-group">
-                    <img style = {{width:'75%'}} src ={require("../Util/Handshake.jpg") }></img> 
+                    <input type="file" name="file" onChange={(e)=>this.onFileChange(e,obj.student_id)} />
+                    <button onClick={this.save} >Upload Profile Picture</button>
+                    
+                    {/* <img style = {{width:'75%'}} src ={require("../Util/Handshake.jpg") }></img>  */}
+                    {img1}
                     
                     <p style = {{fontWeight: 'bold'}}>First Name:</p>
 					
@@ -312,6 +351,8 @@ class Profile extends Component {
                     <div  className="form-group">
                         <input  style ={{width:'90%',borderRadius:'7px'}} type = "date" disabled={!this.state.isBasicSaveEnabled}  onChange = {(e)=>this.changeHandler(e,obj.student_id,"dob","studentObject")} defaultValue = {obj.dob}/>
                      </div>
+
+                     
                      
                 </div>
             )

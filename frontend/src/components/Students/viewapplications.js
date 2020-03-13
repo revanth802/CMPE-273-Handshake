@@ -1,6 +1,7 @@
 import React,{ Component } from "react";
 import axios from "axios";
 import Popup from "reactjs-popup";
+import '../../App.css';
 
 class ViewApplications extends Component
 {
@@ -15,7 +16,19 @@ class ViewApplications extends Component
 
         this.statushandler = this.statushandler.bind(this);
         this.updatethestatus = this.updatethestatus.bind(this);
+        this.buildAvatarUrl = this.buildAvatarUrl.bind(this);
+
+
+       
+       
     }
+
+      buildAvatarUrl(fileName) {
+        console.log("calling Resume", fileName);
+        return "http://localhost:8080/file/" +fileName + "/?role=Resumes";
+      }
+     
+    
 
 
     statushandler(event)
@@ -143,6 +156,32 @@ render()
       </table>
       
       </Popup>
+
+      <Popup
+               trigger={
+                 <a
+                   className="aTag"
+                   style={{
+                     marginTop: "20px",
+                     align: "center",
+                     color: "#2c87f0"
+                   }}
+                 >
+                   Preview Resume{" "}
+                 </a>
+               }
+               modal
+               closeOnDocumentClick
+             >
+               <div>
+                 <embed
+                   src={this.buildAvatarUrl(student.studentJobResume)}
+                   width="600"
+                   height="700"
+                   type="application/pdf"
+                 ></embed>
+               </div>
+             </Popup>
                                 {/* <button  style = {{float :'right',width :'100px',height:'30px'}} onClick = {(e)=>this.viewProfile(student.student_id)}> View Profile</button> */}
                                 </p>
                         </div>

@@ -74,6 +74,7 @@ class Navbar extends Component {
                      <li><Link style = {{color:'white'}} to="/studentevents">Events</Link></li>
 
                      <li><Link style = {{color:'white'}} to="/">Q & A</Link></li>
+                     <li><Link style = {{color:'white'}} to="/">Career Center</Link></li>
                      <li><Link style = {{color:'white'}} to="/applications">Applications</Link></li>
 
 

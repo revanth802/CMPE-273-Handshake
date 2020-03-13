@@ -5,6 +5,9 @@ var bodyParser = require('body-parser');
 var path = require('path');
 const util = require('util');
 var cors = require('cors');
+var multer= require('multer');
+var fs = require('fs')
+
 
 
 var connection = mysql.createConnection({
@@ -81,7 +84,7 @@ console.log("datase from frontend"+request.body);
 });
 
 
-app.post('/submitnewevent', async function(request, response) {
+app.post('/submitnewevent', async function(request, response) {[]
     console.log("session company id",request.session.company_id);
     var eventname = request.body.eventname;
     var eventdescription  = request.body.eventdescription;
@@ -780,3 +783,118 @@ app.post('/eventnamefilter',async function(request,response){
    // console.log('postings:'+jobPostings.job_desc)
 	response.send(events);
 })
+
+
+var fileStorage = multer.diskStorage({
+    destination: function (req, file, cb) {
+    console.log('req in storage',req.query.id)
+    cb(null, './HandshakeFiles/Resumes')
+  },
+  filename: function (req, file, cb) {
+    cb(null, req.query.studentId+'_'+req.query.jobId+'.pdf')
+  }
+ })
+
+
+ var studentProfileStorage = multer.diskStorage({
+    destination: function (req, file, cb) {
+    console.log('req in storage',req.query.studentId)
+    cb(null, './HandshakeFiles/students')
+  },
+  filename: function (req, file, cb) {
+    cb(null, req.query.studentId+'.jpg')
+  }
+ })
+
+ var companyProfileStorage = multer.diskStorage({
+    destination: function (req, file, cb) {
+    console.log('req in storage',req.query.studentId)
+    cb(null, './HandshakeFiles/company')
+  },
+  filename: function (req, file, cb) {
+    cb(null, req.query.companyId+'.jpg')
+  }
+ })
+
+
+var upload = multer({storage:fileStorage}).single('file')
+
+var imageUpload = multer({ storage: studentProfileStorage }).single('studentProfileStorage')
+
+var companyImageUpload = multer({storage:companyProfileStorage}).single('companyProfileStorage')
+
+
+app.post('/uploadFile',async function(req,res){
+    var studentId= req.session.company_id;
+    console.log("inside upload file");
+    if(req.query.type === 'resume'){
+        console.log("in query type",req.query.type);
+    upload(req, res, function (err) {
+        if (err instanceof multer.MulterError) {
+           console.log('error',err)
+            return res.status(500).json(err)
+        } else if (err) {
+           console.log('error',err)
+            return res.status(500).json(err)
+        }
+        values = [req.file.filename,studentId];
+        var sql = 'update  students set studentJobResume = ? where `student_id` = ?';
+     
+        connection.query(sql , async function(error, results) 
+        {
+            var results = await getResults(sql,values);
+            console.log("in company events",results);
+        });
+   console.log('response',req.file)
+   return res.status(200).send(req.file)
+    })
+    }
+    else if(req.query.type === 'studentProfilePic'){
+        console.log('Image uplaoding')
+        imageUpload(req, res, function (err) {
+            if (err instanceof multer.MulterError) {
+                console.log('error',err)
+                return res.status(500).json(err)
+            } else if (err) {
+               console.log('error',err)
+                return res.status(500).json(err)
+            }
+       console.log('response',req.file)
+       return res.status(200).send(req.file)
+    })
+ }
+ else if(req.query.type === 'companyProfilePic'){
+    console.log('Image uplaoding')
+    companyImageUpload(req, res, function (err) {
+        if (err instanceof multer.MulterError) {
+            console.log('error',err)
+            return res.status(500).json(err)
+        } else if (err) {
+           console.log('error',err)
+            return res.status(500).json(err)
+        }
+   console.log('response',res.file)
+   return res.status(200).send(req.file)
+ })
+ }
+ })
+
+ app.get("/file/:name", (req, res) => {
+    const name = req.params.name;
+    console.log("/file req.params: " + JSON.stringify(req.params));
+    const path = __dirname + "/HandshakeFiles/" + req.query.role + "/" + name;
+    console.log("/PATHHH" + path);
+    try {
+      if (fs.existsSync(path)) {
+        res.sendFile(path);
+      } else {
+        res.status(400);
+        res.statusMessage("Not Found");
+        res.end();
+      }
+    } catch (err) {
+      res.status(500);
+      console.log("/file/:name error: " + err);
+      res.end();
+    }
+  });
