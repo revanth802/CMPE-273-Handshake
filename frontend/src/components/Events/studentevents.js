@@ -3,6 +3,7 @@ import axios from "axios";
 import dateFormat from 'dateformat';
 import Popup from "reactjs-popup";
 import {Redirect} from 'react-router';
+import {backend}  from "../../config";
 
 
 class StudentEvents extends Component
@@ -88,7 +89,7 @@ componentWillMount() {
 componentDidMount()
 {
   
-        axios.get('http://localhost:8080/viewregisteredevents')
+        axios.get(backend+'/viewregisteredevents')
                 .then((response) => {
                     console.log("in events");
                     console.log(response.data);
@@ -101,7 +102,7 @@ componentDidMount()
                 console.log("events",this.state.events);
             });
 
-            axios.get('http://localhost:8080/viewallevents')
+            axios.get(backend+'/viewallevents')
             .then((response) => {
                 console.log("in All events");
                 console.log("in all events",response.data["results"]);
@@ -147,7 +148,7 @@ submitnewevent = () => {
     eligibility:this.state.carlist,
  
     }
-  axios.post("http://localhost:8080/submitnewevent", data).then(response => {
+  axios.post(backend+"/submitnewevent", data).then(response => {
     console.log("data is : ", response.data);
     if(response.data === "success")
     {
@@ -201,7 +202,7 @@ register = (eventid) =>
         eventid : eventid
     }
     console.log("in event", eventid)
-    axios.post("http://localhost:8080/applyreg", data).then(response => {
+    axios.post(backend+"/applyreg", data).then(response => {
     console.log("applyreg",response.data);
 });
         console.log("registered");
@@ -226,7 +227,7 @@ applyforevent = (e,eventid,eligibility) =>
     eligibility : eligibility
 }
 console.log("in event", eventid)
-axios.post("http://localhost:8080/applyforevent", data).then(response => {
+axios.post(backend+"/applyforevent", data).then(response => {
 console.log("applyreg",response.data);
 if(response.data === "success")
 {

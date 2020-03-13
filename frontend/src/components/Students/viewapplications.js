@@ -2,6 +2,7 @@ import React,{ Component } from "react";
 import axios from "axios";
 import Popup from "reactjs-popup";
 import '../../App.css';
+import {backend}  from "../../config";
 
 class ViewApplications extends Component
 {
@@ -25,7 +26,7 @@ class ViewApplications extends Component
 
       buildAvatarUrl(fileName) {
         console.log("calling Resume", fileName);
-        return "http://localhost:8080/file/" +fileName + "/?role=Resumes";
+        return backend+"/file/" +fileName + "/?role=Resumes";
       }
      
     
@@ -54,7 +55,7 @@ class ViewApplications extends Component
       {
     jobid : jobid
       }
-      axios.post("http://localhost:8080/showapplication", data).then(response => {
+      axios.post(backend+"/showapplication", data).then(response => {
         console.log("Status Code : ", response.status);
         console.log("inside the show application",response.data);
         if (response.status === 200) 
@@ -88,7 +89,7 @@ class ViewApplications extends Component
        });
 
       console.log("data",data);
-      axios.post("http://localhost:8080/updatestatus", data).then(response => {
+      axios.post(backend+"/updatestatus", data).then(response => {
         console.log("Status Code : ", response.status);
         console.log("inside the update status",response.data);
         if (response.status === 200) 

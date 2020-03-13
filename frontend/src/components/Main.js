@@ -20,6 +20,7 @@ import CompanyProfile from './Company/companyprofile';
 import StudentList from './Students/astudents';
 
 
+
 //Create a Main Component
 class Main extends Component {
     render(){

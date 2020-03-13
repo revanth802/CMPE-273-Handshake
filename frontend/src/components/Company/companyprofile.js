@@ -2,7 +2,8 @@ import React, {Component} from 'react';
 import '../../App.css';
 import axios from 'axios';
 import {Redirect} from 'react-router';
-import {Form,Col} from 'react-bootstrap'
+import {Form,Col} from 'react-bootstrap';
+import {backend}  from "../../config";
 
 class CompanyProfile extends Component
 {
@@ -33,7 +34,7 @@ this.setState({rd:1})
 {
    
     //make a post request with the user data
-    axios.get('http://localhost:8080/cupd')
+    axios.get(backend+'/cupd')
     .then(response => {
         // const data = response.data["results"];
         console.log("response data from axios", response.data);
@@ -62,7 +63,7 @@ ex=()=>
         state:this.state.state
     }
     
-    axios.post('http://localhost:8080/cupd1',data)
+    axios.post(backend+'/cupd1',data)
     .then(response => {
         // const data = response.data["results"];
         console.log("response data from axios", response.data);

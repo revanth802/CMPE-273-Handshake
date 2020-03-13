@@ -1,6 +1,7 @@
 import React,{ Component } from "react";
 import axios from "axios";
 import Popup from "reactjs-popup";
+import {backend}  from "../../config";
 
 class ViewEventApplications extends Component
 {
@@ -42,7 +43,7 @@ class ViewEventApplications extends Component
     eventid : eventid
       }
       console.log("event id", eventid);
-      axios.post("http://localhost:8080/showeventapplications", data).then(response => {
+      axios.post(backend+"/showeventapplications", data).then(response => {
         console.log("Status Code : ", response.status);
         console.log("inside the show application",response.data);
         if (response.status === 200) 
@@ -76,7 +77,7 @@ class ViewEventApplications extends Component
        });
 
       console.log("data",data);
-      axios.post("http://localhost:8080/updateeventstatus", data).then(response => {
+      axios.post(backend+"/updateeventstatus", data).then(response => {
         console.log("Status Code : ", response.status);
         console.log("inside the update status",response.data);
         if (response.status === 200) 

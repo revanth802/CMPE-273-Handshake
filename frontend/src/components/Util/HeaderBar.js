@@ -3,6 +3,7 @@ import '../../App.css';
 import {Link} from 'react-router-dom';
 import cookie from 'react-cookies';
 import axios from 'axios';
+import {backend}  from "../../config";
 
 //create the Navbar Component
 class Navbar extends Component {
@@ -19,7 +20,7 @@ class Navbar extends Component {
     }
 
     componentDidMount(){
-        axios.get('http://localhost:8080/tabHeaders')
+        axios.get(backend+'/tabHeaders')
                 .then((response) => {
                 //update the state with the response data
                 this.setState({

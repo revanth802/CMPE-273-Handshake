@@ -3,6 +3,7 @@ import '../../App.css';
 import axios from 'axios';
 import cookie from 'react-cookies';
 import {Redirect} from 'react-router';
+import {backend}  from "../../config";
 
 
 
@@ -50,7 +51,7 @@ class CompanyLogin extends Component {
         //set the with credentials to true
         axios.defaults.withCredentials = true;
         //make a post request with the user data
-        axios.post('http://localhost:8080/auth',data)
+        axios.post(backend+'/auth',data)
             .then(response => {
                 console.log("Status Code : ",response.status);
                 const data = response.data["results"];

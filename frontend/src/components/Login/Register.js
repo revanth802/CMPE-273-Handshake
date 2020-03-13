@@ -5,6 +5,7 @@ import cookie from "react-cookies";
 import { Redirect } from "react-router";
 import {register} from '../../ReduxModules/actions/index';
 import {connect} from 'react-redux';
+import {backend}  from "../../config";
 
 class Register extends Component {
   constructor(props) {

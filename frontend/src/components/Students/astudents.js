@@ -1,6 +1,7 @@
 import React,{ Component } from "react";
 import axios from "axios";
 import Popup from "reactjs-popup";
+import {backend}  from "../../config";
 
 class StudentList extends Component
 {
@@ -71,7 +72,7 @@ class StudentList extends Component
       {
     jobid : jobid
       }
-      axios.get("http://localhost:8080/showstudentlist").then(response => {
+      axios.get(backend+"/showstudentlist").then(response => {
         console.log("Status Code : ", response.status);
         console.log("inside the show application",response.data);
         if (response.status === 200) 
@@ -107,7 +108,7 @@ class StudentList extends Component
        });
 
       console.log("data",data);
-      axios.post("http://localhost:8080/showstudentapplications", data).then(response => {
+      axios.post(backend+"/showstudentapplications", data).then(response => {
         console.log("Status Code : ", response.status);
         console.log("inside the update status",response.data);
         if (response.status === 200) 
@@ -157,7 +158,8 @@ render()
       <table>
         <h1> Student Profile of: {student.first_name} {student.last_name}</h1>
       <tr>
-      <td>First name: {student.first_name}</td>
+        <td>   <img src ={require("../Util/lo.png") } style={{float:"left",height:"100px",width:"100px"}} alt="hs"/></td></tr>
+    <tr>  <td>First name: {student.first_name}</td>
       </tr>
       <tr><td>Last name: {student.last_name}</td> </tr>
       <tr> <td>Email: {student.email}</td> </tr>

@@ -3,6 +3,7 @@ import '../../App.css';
 import axios from 'axios';
 import cookie from 'react-cookies';
 import {Redirect} from 'react-router';
+import {backend}  from "../../config";
 
 class Students extends Component {
     constructor(){
@@ -30,7 +31,7 @@ class Students extends Component {
     }
     //get the books data from backend  
     componentDidMount(){
-        axios.get('http://localhost:8080/getAllStudents')
+        axios.get(backend+'/getAllStudents')
                 .then((response) => {
                 //update the state with the response data
                 this.setState({

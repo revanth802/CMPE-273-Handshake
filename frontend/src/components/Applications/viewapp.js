@@ -81,7 +81,7 @@
 
 // componentDidMount()
 // {
-//     axios.get('http://localhost:8080/displayjobdetails')
+//     axios.get(backend+'/displayjobdetails')
 //             .then((response) => {
 //                 console.log("This is getting printed", response.data);
 //                 const data = response.data["results"];
@@ -125,7 +125,7 @@
 //     jobdescription:this.state.jobdescription,
 //     jobcategory:this.state.jobcategory
 //     }
-//   axios.post("http://localhost:8080/submitnewjob", data).then(response => {
+//   axios.post(backend+"/submitnewjob", data).then(response => {
 //     console.log("Status Code : ", response.data);
 //     if(response.data === "success")
 //     {
@@ -141,7 +141,7 @@
 //     id: id,
 //     myJourney: this.state.myJourney
 //   };
-//   axios.post("http://localhost:8080/myjourney", data).then(response => {
+//   axios.post(backend+"/myjourney", data).then(response => {
 //     console.log("Status Code : ", response.status);
 //     if (response.status === 200) {
 //       console.log("Updated carrierObjective details successfully");
@@ -160,7 +160,7 @@
 //   {
 // jobid : jobid
 //   }
-//   axios.post("http://localhost:8080/showapplication", data).then(response => {
+//   axios.post(backend+"/showapplication", data).then(response => {
 //     console.log("Status Code : ", response.status);
 //     console.log("inside the show application",response.data);
 //     if (response.status === 200) 

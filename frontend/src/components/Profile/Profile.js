@@ -5,6 +5,7 @@ import {Redirect} from 'react-router';
 import {fetchProfile,saveExperience,saveEducation, saveStudentObject, deleteExperience, deleteEducation} from '../../ReduxModules/actions/index';
 import {connect} from 'react-redux';
 import axios from 'axios';
+import {backend}  from "../../config";
 
 class Profile extends Component {
     constructor(){
